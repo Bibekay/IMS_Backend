@@ -8,19 +8,20 @@ const uploadRouter = require('./routes/upload');
 // const ordersRouter = require('./routes/orders');
 
 const dotenv = require('dotenv').config();
-//const router = require('./routes/upload');
 
-const auth = require('./auth');
+
+
 
 
 
 const app = express();
 app.use(morgan('tiny'));
 app.use(express.json());
+app.use(express.static(__dirname + "/public/products"));
+app.use(express.static(__dirname + "/public/uploads"))
 
+const auth = require('./auth');
 app.use(express.urlencoded({extended: true }));
-
-app.use(express.static(__dirname + "/public"));
 
 mongoose.connect(process.env.URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
     .then((db) => {
@@ -33,10 +34,10 @@ app.use('/products', productRouter);
 // app.use('/order', ordersRouter);
 
 
-app.use(auth.verifyUser);
 
 app.use('/upload', uploadRouter);
 
+app.use(auth.verifyUser);
 
 
 app.use((err, req, res, next) => {

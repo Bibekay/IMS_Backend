@@ -2,8 +2,9 @@ const express = require('express');
 const Product = require('../models/products');
 const auth = require('../auth');
 const router = express.Router();
-
 router.route('/product')
+
+
 .post((req,res,next) => {
     let product = new Product(req.body);
     //product.category = req.Category._id;
@@ -17,6 +18,15 @@ router.route('/product')
         res.statusCode = 201;
         res.json(product);
     }).catch(next);
+});
+
+router.get('/product', (req,res,next)=>{
+    Product.find({})
+    .then((product) => {
+        res.json(product);
+    }).catch((err) => next(err));
+
+
 });
 
 
