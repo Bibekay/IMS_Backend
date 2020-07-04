@@ -3,11 +3,12 @@ const mongoose = require("mongoose");
 const morgan = require('morgan');
 const userRouter = require('./routes/users');
 const categoryRouter = require('./routes/categories');
-// const productsRouter = require('./routes/products');
+const productRouter = require('./routes/products');
+const uploadRouter = require('./routes/upload');
 // const ordersRouter = require('./routes/orders');
 
 const dotenv = require('dotenv').config();
-const uploadRouter = require('./routes/upload');
+//const router = require('./routes/upload');
 
 const auth = require('./auth');
 
@@ -28,13 +29,13 @@ mongoose.connect(process.env.URL, { useNewUrlParser: true, useUnifiedTopology: t
 
 app.use('/users', userRouter);
 app.use('/categories', categoryRouter);
-// app.use('products', productsRouter);
+app.use('/products', productRouter);
 // app.use('/order', ordersRouter);
-app.use('/upload', uploadRouter);
+
 
 app.use(auth.verifyUser);
 
-
+app.use('/upload', uploadRouter);
 
 
 
