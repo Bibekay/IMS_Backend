@@ -52,6 +52,15 @@ const productstorage = multer.diskStorage({
     }
 });
 
+const userstorage = multer.diskStorage({
+    destination: "./public/users",
+    filename: (req, file, callback) => {
+        let ext = path.extname(file.originalname);
+        callback(null, `${file.fieldname}-${Date.now()}${ext}`);
+    }
+});
+
+
 
 
 const imageFileFilter = (req, file, cb) => {
@@ -82,5 +91,18 @@ router.route('/product')
         .post(uploadproducts.single('imageFile'), (req, res) => {
             res.json(req.file);
         });   
+
+
+    const uploadusers = multer({
+        storage: userstorage,
+        fileFilter: imageFileFilter
+    })
+    
+    
+router.route('/user')
+        .post(uploadusers.single('imageFile'), (req, res) => {
+            res.json(req.file);
+        });   
+
 
 module.exports = router;
