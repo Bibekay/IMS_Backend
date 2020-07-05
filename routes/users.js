@@ -55,80 +55,99 @@ router.post('/login', (req, res, next) => {
 })
 
 
+
+router.get('/user', (req,res,next)=>{
+    User.find({admin:false})
+    .then((user) => {
+        res.json(user);
+    }).catch((err) => next(err));
+    
+})
+
 router.get('/me', auth.verifyUser, (req, res, next) => {
-    res.json({ _id: req.user._id, fullname: req.user.fullname, username: req.user.username,phone: req.user.phone,email: req.user.email, image: req.user.image });
+    res.json({ _id: req.user._id,
+        fullname: req.user.fullname, 
+        username:req.user.username,
+        contact: req.user.contact,
+        email: req.user.email,
+        birthyear:req.user.birthyear,
+        gender:req.user.gender,
+        image:req.user.image
+
+});
 });
 
-router.put('/me', auth.verifyUser, (req, res, next) => {
-    User.findByIdAndUpdate(req.user._id, { $set: req.body }, { new: true })
-        .then((user) => {
-            res.json({ _id: user._id, fullname: req.user.fullname, username: user.username,phone: user.phone,email: user.email, image: user.image });
-        }).catch(next);
-});
-
-
-router.route('/:id/saved')
-.get((req, res, next) => {
-    User.findById(req.params.id)
-    .populate('saved')
-        .then((user) => {
-            res.json(user.saved);
-        })
-        .catch(next);
-})
-.delete((req, res, next) => {
-    User.findById(req.params.id)
-        .then((user) => {
-            user.saved = [];
-            user.save()
-                .then((user) => {
-                    res.json(user.saved);
-                })
-                .catch(next);
-        })
-        .catch(next);
-});
+// router.put('/me', auth.verifyUser, (req, res, next) => {
+//     User.findByIdAndUpdate(req.user._id, { $set: req.body }, { new: true })
+//         .then((user) => {
+//             res.json({ _id: user._id, fullname: req.user.fullname, username: user.username,phone: user.phone,email: user.email, image: user.image });
+//         }).catch(next);
+// });
 
 
 
+// router.route('/:id/saved')
+// .get((req, res, next) => {
+//     User.findById(req.params.id)
+//     .populate('saved')
+//         .then((user) => {
+//             res.json(user.saved);
+//         })
+//         .catch(next);
+// })
+// .delete((req, res, next) => {
+//     User.findById(req.params.id)
+//         .then((user) => {
+//             user.saved = [];
+//             user.save()
+//                 .then((user) => {
+//                     res.json(user.saved);
+//                 })
+//                 .catch(next);
+//         })
+//         .catch(next);
+// });
 
-//saved (adding hotels and empting in saved hotels)
-router.route('/:id/saved/:hid')
-.get((req, res, next) => {
-    User.findById(req.params.id)
-        .then((user) => {
-            res.json(user.saved);
-        })
-        .catch(next);
-})
-.post((req, res, next) => {
-    User.findById(req.params.id)
-        .then((user) => {
-            user.saved.push(req.params.hid);
-            user.save()
-                .then((user) => {
-                    res.json(user.saved);
-                })
-                .catch(next);
-        })
-        .catch(next);
-})
-.put((req, res) => {
-    res.statusCode = 405;
-    res.json({ message: "Method not allowed" });
-})
-.delete((req, res, next) => {
-    User.findById(req.params.id)
-        .then((user) => {
-            user.saved.pull(req.params.hid);
-            user.save()
-                .then((user) => {
-                    res.json(user.saved);
-                })
-                .catch(next);
-        })
-        .catch(next);
-});
+
+
+
+// //saved (adding hotels and empting in saved hotels)
+// router.route('/:id/saved/:hid')
+// .get((req, res, next) => {
+//     User.findById(req.params.id)
+//         .then((user) => {
+//             res.json(user.saved);
+//         })
+//         .catch(next);
+// })
+// .post((req, res, next) => {
+//     User.findById(req.params.id)
+//         .then((user) => {
+//             user.saved.push(req.params.hid);
+//             user.save()
+//                 .then((user) => {
+//                     res.json(user.saved);
+//                 })
+//                 .catch(next);
+//         })
+//         .catch(next);
+// })
+// .put((req, res) => {
+//     res.statusCode = 405;
+//     res.json({ message: "Method not allowed" });
+// })
+// .delete((req, res, next) => {
+//     User.findById(req.params.id)
+//         .then((user) => {
+//             user.saved.pull(req.params.hid);
+//             user.save()
+//                 .then((user) => {
+//                     res.json(user.saved);
+//                 })
+//                 .catch(next);
+//         })
+//         .catch(next);
+// });
 
 
 module.exports = router;
