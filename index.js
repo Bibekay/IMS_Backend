@@ -20,6 +20,7 @@ app.use(express.json());
 app.use(express.static(__dirname + "/public/products"));
 app.use(express.static(__dirname + "/public/uploads"))
 app.use(express.static(__dirname + "/public/users"))
+app.use(express.static(__dirname + "/public/categories"))
 const auth = require('./auth');
 app.use(express.urlencoded({extended: true }));
 
