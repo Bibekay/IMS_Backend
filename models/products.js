@@ -10,11 +10,6 @@ const productSchema = new mongoose.Schema({
         type: String
       
     },
-
-    product_image:{
-        type:String
-    },
-
     description:{
         type:String
     },
@@ -25,7 +20,13 @@ const productSchema = new mongoose.Schema({
 
     price:{
         type:String
-    }
+    },
+    
+
+    product_image:{
+        type:String
+    },
+
 }
     , {timestamps: true});
 
