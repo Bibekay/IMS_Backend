@@ -1,13 +1,15 @@
 const express = require('express');
 const Product = require('../models/products');
+const Category = require('../models/categories');
 const auth = require('../auth');
 const router = express.Router();
 router.route('/product')
 
 
+router.route('/product', auth.verifyUser)
 .post((req,res,next) => {
     let product = new Product(req.body);
-    //product.category = req.Category._id;
+    product.category = req.body.category;
     product.product_name = req.body.product_name;
     product.product_image = req.body.product_image;
     product.description = req.body.description;
@@ -22,6 +24,7 @@ router.route('/product')
 
 router.get('/product', (req,res,next)=>{
     Product.find({})
+    .populate('category')
     .then((product) => {
         res.json(product);
     }).catch((err) => next(err));
