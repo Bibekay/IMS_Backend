@@ -5,7 +5,7 @@ const userRouter = require('./routes/users');
 const categoryRouter = require('./routes/categories');
 const productRouter = require('./routes/products');
 const uploadRouter = require('./routes/upload');
-// const ordersRouter = require('./routes/orders');
+const orderRouter = require('./routes/orders');
 
 const dotenv = require('dotenv').config();
 
@@ -32,7 +32,7 @@ mongoose.connect(process.env.URL, { useNewUrlParser: true, useUnifiedTopology: t
 app.use('/users', userRouter);
 app.use('/categories', categoryRouter);
 app.use('/products', productRouter);
-// app.use('/order', ordersRouter);
+ app.use('/orders', orderRouter);
 
 
 

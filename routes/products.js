@@ -46,7 +46,7 @@ router.put('/:id/Update', auth.verifyUser,(req, res, next)=>
         product_name:req.body.product_name, 
         description: req.body.description,
         price:req.body.price, 
-        image: req.body.image,
+        product_image: req.body.product_image,
 
         }
  Product.findByIdAndUpdate(req.params.id,  {$set:newproduct},{new:true})
