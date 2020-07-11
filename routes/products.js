@@ -32,5 +32,13 @@ router.get('/product', (req,res,next)=>{
 
 });
 
+router.delete('/deleteProduct/:id', auth.verifyUser, (req, res, next)=> {
+    Product.findByIdAndDelete(req.params.id)
+    .then((product)=>{
+        res.json({status:"deleted"});
+    })
+}); 
+
+
 
 module.exports = router;
