@@ -39,8 +39,8 @@ router.delete('/deleteProduct/:id', auth.verifyUser, (req, res, next)=> {
     })
 }); 
 
-//update single post posted by users
-router.put('/:id/Update', auth.verifyUser,(req, res, next)=>
+
+router.put('/:id/Update',(req, res, next)=>
 {
     newproduct = {
         product_name:req.body.product_name, 
@@ -49,6 +49,7 @@ router.put('/:id/Update', auth.verifyUser,(req, res, next)=>
         product_image: req.body.product_image,
 
         }
+        
  Product.findByIdAndUpdate(req.params.id,  {$set:newproduct},{new:true})
     .then((reply)=>{
         if(reply == null) throw new Error("post not found");

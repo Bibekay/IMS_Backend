@@ -6,7 +6,7 @@ const categoryRouter = require('./routes/categories');
 const productRouter = require('./routes/products');
 const uploadRouter = require('./routes/upload');
 const orderRouter = require('./routes/orders');
-
+const cartRouter = require('./routes/carts');
 const dotenv = require('dotenv').config();
 
 
@@ -31,8 +31,9 @@ mongoose.connect(process.env.URL, { useNewUrlParser: true, useUnifiedTopology: t
 
 app.use('/users', userRouter);
 app.use('/categories', categoryRouter);
-app.use('/products', productRouter);
+
  app.use('/orders', orderRouter);
+ app.use('/carts', cartRouter);
 
 
 
@@ -40,7 +41,7 @@ app.use('/upload', uploadRouter);
 
 app.use(auth.verifyUser);
 
-
+app.use('/products', productRouter);
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.statusCode = 500;
